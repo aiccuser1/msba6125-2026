@@ -90,4 +90,4 @@ updated: 2026-08-19
 
 ## 工具对照
 
-工具无法使用时，查 [[teaching/msba6125-management-information-systems/lab/ai-tools-guide|AI 工具切换对照指南]]（Gemini↔Copilot↔WPS AI／DeepSeek 思考模式／harness 说明／ima 知识库）。
+工具无法使用时，查 AI 工具切换对照指南（Gemini↔Copilot↔WPS AI／DeepSeek 思考模式／harness 说明／ima 知识库）。
