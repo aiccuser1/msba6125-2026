@@ -69,9 +69,9 @@ updated: 2026-08-21
   4. 於個人副本中依序執行各單元（環境驗證＋基本運算＋Gemini API 連線測試），確認輸出顯示 OK
 - 說明：一律操作個人副本，不修改原檔；API 金鑰以 Colab Secrets 儲存（notebook 內含設定說明）
 
-### 步驟 6：啓用 NotebookLM（Gemini Notebook）
+### 步驟 6：認識 NotebookLM（Gemini Notebook）
 
-- 用途：知識庫問答工具——以課程文件爲基礎提問，答案附原文出處；本課程指定使用 NotebookLM 進行文獻閱讀與知識庫建置
+- 用途：知識庫問答工具——以課程文件爲基礎提問，答案附原文出處；本課程介紹此工具，你可自行選用
 - 說明：NotebookLM 已更名爲 **Gemini Notebook**（介面與功能相同，官方新名稱）；登入 notebooklm.google.com 後即可使用
 - 操作：訪問 notebooklm.google.com → 以 Google 帳號登入 → 新建筆記本 → 上傳課程講義（PDF／Word）→ 基於文件提問，答案附原文出處
 - 無法存取 Google 服務者：可使用替代工具（見文末「工具對照表」——如元寶＋ima 桌面版），用法與 NotebookLM 相同
