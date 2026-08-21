@@ -63,10 +63,10 @@ updated: 2026-08-21
 - 用途：验证课程实验程式之取得流程
 - 操作：
   1. 开启课程仓库：github.com/aiccuser1/msba6125-2026
-  2. 于仓库 `lab/ch01/` 目录下找到本课实验 notebook 档案（如 `Lab_Ch01.ipynb`），点选「Open in Colab」按钮（或依格式 colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch01/<档案名> 访问）
+  2. 于仓库 `lab/ch01/` 目录下找到本课实验 notebook 档案 `Lab_Ch01.ipynb`，点选「Open in Colab」按钮（或直接开启：https://colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch01/Lab_Ch01.ipynb）
   3. Colab 开启后：选单 File（档案）→ Save a copy in Drive（在云端硬碟另存副本）
-  4. 于个人副本中依序执行各单元，确认环境可执行
-- 说明：一律操作个人副本，不修改原档
+  4. 于个人副本中依序执行各单元（环境验证＋基本运算＋Gemini API 连线测试），确认输出显示 OK
+- 说明：一律操作个人副本，不修改原档；API 金钥以 Colab Secrets 储存（notebook 内含设定说明）
 
 ### 步骤 6：启用 NotebookLM（Gemini Notebook）
 
