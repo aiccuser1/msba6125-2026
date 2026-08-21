@@ -62,10 +62,11 @@ updated: 2026-08-21
 
 - 用途：验证课程实验程式之取得流程
 - 操作：
-  1. 于浏览器开启以下网址（Colab 直接加载 GitHub 仓库中的 notebook）：
+  1. 确认浏览器已登入你的 Google 账号（未登入时 Colab 会要求先登入——必须登入才能开启与执行）
+  2. 于浏览器开启以下网址（Colab 直接加载 GitHub 仓库中的 notebook）：
      https://colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch01/Lab_Ch01.ipynb
-  2. Colab 开启后：选单 File（档案）→ Save a copy in Drive（在云端硬碟另存副本）
-  3. 于个人副本中依序执行各单元（环境验证＋基本运算＋Gemini API 连线测试），确认输出显示 OK
+  3. Colab 开启后（以你的账号工作阶段载入）：选单 File（档案）→ Save a copy in Drive（在云端硬碟另存副本——否则只是临时载入，不会保存）
+  4. 于个人副本中依序执行各单元（环境验证＋基本运算＋Gemini API 连线测试），确认输出显示 OK
 - 说明：一律操作个人副本，不修改原档；API 金钥以 Colab Secrets 储存（notebook 内含设定说明）
 
 ### 步骤 6：启用 NotebookLM（Gemini Notebook）
