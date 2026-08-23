@@ -44,23 +44,26 @@ updated: 2026-08-23
 
 **方式 A：Google Docs 语音输入（免费、免安装）**
 
-- 官方入口：docs.google.com（语音输入功能说明：support.google.com/docs/answer/4492226）
+- 官方入口：docs.google.com（语音输入功能官方说明：support.google.com/docs/answer/4492226；支援 Chrome／Edge／Safari 最新版）
 - 操作：
-  1. 于浏览器开启 docs.google.com，建立新文件（命名「会议转录－<组别>」）
-  2. 选单「工具（Tools）→ 语音输入（Voice typing）」
-  3. 于电脑播放录音档（喇叭或耳机），麦克风对准音源
-  4. 语音输入即时转为文字——播放完毕后停止，检查并修正明显错误
+  1. 确认电脑麦克风已开启（Windows：设定→系统→音效→麦克风）
+  2. 于浏览器开启 docs.google.com，建立新文件（命名「会议转录－<组别>」）
+  3. 于选单点「工具（Tools）→ 语音输入（Voice typing）」——文件中央出现麦克风图示
+  4. 点麦克风图示开始 → 于电脑播放录音档（建议用耳机避免回授），麦克风对准音源
+  5. 播放完毕后再点麦克风图示停止——检查并修正明显错误（灰底线字词可右键看建议）
 - 预期结果：文件内为会议内容之文字转录
 
 **方式 B：Whisper 线上工具（更准确、支援英文音讯）**
 
-- 官方入口：https://openai.com/index/whisper/（Whisper 为 OpenAI 开源语音辨识模型）；线上免费版可搜寻「Whisper web free」取得
+- 免费入口：https://huggingface.co/spaces/openai/whisper（Hugging Face 上 OpenAI 官方 Whisper demo，免安装）
 - 操作：
-  1. 开启任一 Whisper 线上工具（或 Colab 执行 openai-whisper）
+  1. 于浏览器开启上方连结（首次需载入模型，等待 1-3 分钟）
   2. 上传录音档（meeting-sample-10min.mp3）
-  3. 选择语言 English、输出格式 txt
-  4. 执行转录，下载文字档
-- 预期结果：取得转录文字（txt 档），复制贴入 Google Docs 文件
+  3. 于「Model」选择 small 或 base（速度较快）→ 于「Task」选 Transcribe → 于「Language」选 English
+  4. 点选 Submit／Transcribe，等待转录完成（档案 10 分钟约需 1-3 分钟处理）
+  5. 完成后复制输出文字（或下载 txt 档），贴入 Google Docs 文件
+- 预期结果：取得转录文字，复制贴入 Google Docs 文件
+- 说明：Whisper 为 OpenAI 开源语音辨识模型（https://openai.com/index/whisper/）；此 demo 档案上传 24 小时后自动删除——完成后请立即复制结果；若此连结失效，可搜寻「Hugging Face whisper」找其他免费转录 Space
 
 - 说明：**两种方式皆须实际操作一次**——于完成标准记录两者之准确度与便利性比较；若操作卡住，可向 AI 提问（如「Whisper 如何上传音讯转录？」）或搜寻教学影片（关键字：Whisper tutorial／Google Docs voice typing）
 
