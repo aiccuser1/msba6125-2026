@@ -40,32 +40,20 @@ updated: 2026-08-23
 - 说明：录音约 10 分钟、多位发言者——聆听时可简记主题（谁在讨论什么）
 - 完整版：此为截取之 10 分钟版；完整会议录音（约 26 分钟）于 https://archive.org/details/casdwmc_000034（选用——可自行聆听完整内容）
 
-### 步骤 2：转录录音为文字（二选一）
-
-**方式 A：Google Docs 语音输入（免费、免安装）**
-
-- 官方入口：docs.google.com（语音输入功能官方说明：support.google.com/docs/answer/4492226；支援 Chrome／Edge／Safari 最新版）
-- 操作：
-  1. 确认电脑麦克风已开启（Windows：设定→系统→音效→麦克风）
-  2. 于浏览器开启 docs.google.com，建立新文件（命名「会议转录－<组别>」）
-  3. 于选单点「工具（Tools）→ 语音输入（Voice typing）」——文件中央出现麦克风图示
-  4. 点麦克风图示开始 → 于电脑播放录音档（建议用耳机避免回授），麦克风对准音源
-  5. 播放完毕后再点麦克风图示停止——检查并修正明显错误（灰底线字词可右键看建议）
-- 预期结果：文件内为会议内容之文字转录
-
-**方式 B：Whisper 线上工具（更准确、支援英文音讯）**
+### 步骤 2：转录录音为文字（Whisper 线上工具）
 
 - 免费入口：https://huggingface.co/spaces/openai/whisper（Hugging Face 上 OpenAI 官方 Whisper demo，免安装）
 - 操作：
   1. 于浏览器开启上方连结（首次需载入模型，等待 1-3 分钟）
   2. 上传录音档（meeting-sample-10min.mp3）
   3. 于「Model」选择 small 或 base（速度较快）→ 于「Task」选 Transcribe → 于「Language」选 English
-  4. 点选 Submit／Transcribe，等待转录完成（档案 10 分钟约需 1-3 分钟处理）
-  5. 完成后复制输出文字（或下载 txt 档），贴入 Google Docs 文件
-- 预期结果：取得转录文字，复制贴入 Google Docs 文件
-- 说明：Whisper 为 OpenAI 开源语音辨识模型（https://openai.com/index/whisper/）；此 demo 档案上传 24 小时后自动删除——完成后请立即复制结果；若此连结失效，可搜寻「Hugging Face whisper」找其他免费转录 Space
-
-- 说明：**两种方式皆须实际操作一次**——于完成标准记录两者之准确度与便利性比较；若操作卡住，可向 AI 提问（如「Whisper 如何上传音讯转录？」）或搜寻教学影片（关键字：Whisper tutorial／Google Docs voice typing）
+  4. 点选 Submit／Transcribe，等待转录完成（10 分钟音讯约需 1-3 分钟）
+  5. 完成后复制输出文字（或下载 txt 档）
+- 预期结果：取得英文转录文字
+- **说明（重要）**：
+  - Whisper 仅转录文字、**不区分说话者**（无法得知谁说了什么）——后续摘要时需注意
+  - 若此连结失效，可搜寻「Hugging Face whisper」找其他免费转录工具；档案上传 24 小时后自动删除——请立即复制结果
+- 教师已备转录参考：`lab/ch02/audio/transcript-en.txt`（英文）／`transcript-zh.txt`（中文翻译）——可用于对照你的转录结果
 
 ### 步骤 3：以 Gemini 产生摘要与行动项
 
