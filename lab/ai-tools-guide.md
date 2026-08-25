@@ -6,7 +6,7 @@ tags:
   - ai-education
   - guide
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-24
 ---
 
 # AI 工具切换对照指南（Gemini / Copilot / WPS AI / DeepSeek）
@@ -134,11 +134,12 @@ Prompt：「总结下面销售数据的主要趋势：1月 120 万、2月 98 万
 | 主力工具（本课程）                  | 替代工具                                           | 说明                                                                                                                    |
 | -------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Gemini（gemini.google.com）  | DeepSeek／Kimi／通义千问／豆包                          | 同为网页对话型 AI；prompt 通用                                                                                                  |
-| Google Colab（云端 Python 笔记） | 本地 Excel／WPS 表格；本机 Jupyter（IPython）notebook 环境 | Colab 课（第 4 课起）须用 Colab；中国同学可课后用本地表格复算同一练习；想在本地离线运行者，可自行研究安装 Jupyter（IPython）notebook 环境——请自行查找官方文档（docs.jupyter.org） |
+| Google Colab（云端 Python 笔记） | 魔搭 ModelScope Notebook；本地 Excel／WPS 表格；本机 Jupyter（IPython）notebook 环境 | Colab 课（第 4 课起）澳门课堂用 Colab；中国同学替代：① 魔搭 Notebook（阿里官方，CPU 永久免费、GPU 新用户 36-100h，可直接上传本课程 .ipynb 运行——见下文「Colab 的中国替代」）② 本地表格复算同一练习 ③ 本机 Jupyter（自行查阅 docs.jupyter.org） |
 | Gmail                      | Outlook／WPS 邮箱                                 | 课程不依赖具体邮箱，仅作 Email 工作流示例                                                                                              |
 | Google 账号                  | 手机号注册（DeepSeek／Kimi 等）                         | 中国同学若无 Google 账号，直接注册替代工具即可完成网页端活动                                                                                    |
 | Gemini App（手机）             | 手机浏览器打开网页版                                     | 未带笔电时，网页端活动手机可完成（备用方案）                                                                                                |
 | Google NotebookLM（知识库问答）   | ima 桌面版／元宝                                     | NotebookLM 在澳门与中国无法存取；ima 为同类替代（上传文档 → 基于文档问答，答案带出处）                                                                  |
+| Whisper（语音转文字，Hugging Face demo） | 元宝「AI 录音笔」／通义听悟                            | Lab 2 录音转写：元宝电脑端上传音频 → 转写＋AI 总结；通义听悟（阿里）免费每日额度、支持区分发言人——中国大陆可直接使用                                        |
 
 ## 知识库问答：NotebookLM 的替代（元宝＋ima）
 
@@ -153,10 +154,21 @@ Google NotebookLM（Gemini 笔记本）能把文档变成可查询的知识库�
 2. 新建知识库 → 上传课程讲义／笔记（PDF／Word）
 3. 基于知识库提问，答案自带出处；与「把整段文字贴给聊天 AI」相比，回答更集中、可核验
 
+## Colab 的中国替代：魔搭 ModelScope Notebook
+
+中国大陆无法直接存取 Google Colab（需翻墙）。如需在境内完成 Colab 类云端笔记作业，可用**魔搭 ModelScope Notebook**（阿里云官方，modelscope.cn）：
+
+- **免费**：CPU 环境永久免费（8 核/32GB）；GPU 环境（24GB 显存）新用户免费 36-100 小时（随官方活动变动，以页面实时显示为准）；100GB 持久存储
+- **兼容**：JupyterLab 界面，**直接上传本课程 .ipynb 文件即可运行**——本课程 notebook 的环境验证单元无需修改；Gemini 金钥单元在非 Colab 环境会自动跳过（不影响其余单元）
+- **操作**：注册 modelscope.cn → 绑定阿里云账号 → 「我的 Notebook」→ 上传 .ipynb → 启动
+- **限制**：单次实例最长运行 10 小时、空闲 1 小时自动关闭、外网受限（本课程 notebook 不需外网）
+- **提示**：免费额度与活动政策可能调整，使用前以官方最新说明为准
+
 ## 常见问题
 
 - **NotebookLM／Gemini 笔记本用不了？** 用 ima 桌面版或元宝替代——上传文档建知识库、基于文档问答（答案带出处），用法见上文「知识库问答」节
 - **免费额度受限怎么办？** 稍等几分钟重试，或切换另一个免费模型（本指南对照表内任选）；同一 key 不要并发多个任务
 - **Colab 免费额度用完？** 等待额度刷新，或把代码步骤改为本地表格手动完成同一练习（结果应与 notebook 输出一致）
+- **在中国大陆无法存取 Colab／GitHub？** 课程主路径为澳门课堂 Colab；境内可选魔搭 ModelScope Notebook（见上文「Colab 的中国替代」）；Lab 2 录音档已放 Canvas、无需 GitHub 下载；语音转写用元宝「AI 录音笔」或通义听悟（见工具对照表）
 - **数据可以随便贴给 AI 吗？** 不可以。只使用可公开数据与脱敏后的示例数据；公司/客户真实数据不得上传（第 8 课 AI 安全实务会详解）
 - **各平台规则会变吗？** 会。本指南以 2026-08 为基准，使用前以各平台官方最新说明为准
