@@ -26,7 +26,7 @@ updated: 2026-08-23
 
 - 已登入 Google 帐号（未登入者依 Lab_Ch01 步骤 1 注册）
 - Gemini 网页版可存取（gemini.google.com；无法存取者用替代工具：元宝/DeepSeek/Kimi，操作相同）
-- 会议录音档已由教师提供（`lab/ch02/audio/meeting-sample-10min.mp3`，约 10 分钟）
+- 会议录音档已在Canvas（約 10 分鐘）
 
 ## 操作步骤
 
