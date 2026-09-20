@@ -6,7 +6,7 @@ tags:
   - ai-education
   - guide
 created: 2026-08-19
-updated: 2026-08-24
+updated: 2026-09-09
 ---
 
 # AI 工具切换对照指南（Gemini / Copilot / WPS AI / DeepSeek）
@@ -140,6 +140,7 @@ Prompt：「总结下面销售数据的主要趋势：1月 120 万、2月 98 万
 | Gemini App（手机）             | 手机浏览器打开网页版                                     | 未带笔电时，网页端活动手机可完成（备用方案）                                                                                                |
 | Google NotebookLM（知识库问答）   | ima 桌面版／元宝                                     | NotebookLM 在澳门与中国无法存取；ima 为同类替代（上传文档 → 基于文档问答，答案带出处）                                                                  |
 | Whisper（语音转文字，Hugging Face demo） | 元宝「AI 录音笔」／通义听悟                            | Lab 2 录音转写：元宝电脑端上传音频 → 转写＋AI 总结；通义听悟（阿里）免费每日额度、支持区分发言人——中国大陆可直接使用                                        |
+| Hermes Agent（本机安装的 AI 助手框架，hermes-agent.nousresearch.com） | 网页对话型 AI（Gemini／DeepSeek 等） | Lab_Hermes：本机 agent——可读写你电脑的档案、调用学术检索工具（Scopus）；对话经云端免费模型（Nous Portal，Google 或 GitHub 登入）。网页聊天工具无本机档案与工具能力，两者互补 |
 
 ## 知识库问答：NotebookLM 的替代（元宝＋ima）
 
@@ -170,5 +171,6 @@ Google NotebookLM（Gemini 笔记本）能把文档变成可查询的知识库�
 - **免费额度受限怎么办？** 稍等几分钟重试，或切换另一个免费模型（本指南对照表内任选）；同一 key 不要并发多个任务
 - **Colab 免费额度用完？** 等待额度刷新，或把代码步骤改为本地表格手动完成同一练习（结果应与 notebook 输出一致）
 - **在中国大陆无法存取 Colab／GitHub？** 课程主路径为澳门课堂 Colab；境内可选魔搭 ModelScope Notebook（见上文「Colab 的中国替代」）；Lab 2 录音档已放 Canvas、无需 GitHub 下载；语音转写用元宝「AI 录音笔」或通义听悟（见工具对照表）
+- **Hermes（Lab_Hermes）下载或连线失败？** 见该 Lab 教材「常见问题」：关闭 VPN／代理后重试下载；连线失败改用校园网络或手机热点；免费层限速时稍候重试或更换其他 `:free` 模型
 - **数据可以随便贴给 AI 吗？** 不可以。只使用可公开数据与脱敏后的示例数据；公司/客户真实数据不得上传（第 8 课 AI 安全实务会详解）
 - **各平台规则会变吗？** 会。本指南以 2026-08 为基准，使用前以各平台官方最新说明为准

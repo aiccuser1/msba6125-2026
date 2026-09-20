@@ -1,0 +1,146 @@
+---
+type: lab
+tags:
+  - teaching
+  - msba6125
+  - lab
+  - guide
+created: 2026-08-19
+updated: 2026-09-20
+---
+
+# 第 4 課｜Colab 學術檢索實作：Scopus 文獻搜尋與開放取用 PDF 下載
+
+> 本單元動手實作：於 Elsevier Developer Portal 申請個人 Scopus API key → 以 Colab 雲端筆記本串接 Scopus 學術資料庫完成兩階段文獻檢索（寬泛檢索 → 標題篩選 → 聚焦檢索）→ 查詢各篇之開放取用（Open Access, OA）狀態並下載可合法取得之 PDF，無法開放取用者保留書目資訊。
+>
+> 完成檢索後進行對照練習：向 AI 聊天機器人索取同一主題之文獻，逐筆核對其引用是否真實存在於文獻資料庫，統計真實比例。本實作對應課程主題「資訊系統中的倫理與社會議題」，並訓練「檢索 → 篩選 → 合法取得 → 對照驗證 → 人工核對」完整工作流。
+
+## 學習目標（Learning Objectives）
+
+完成本單元後，你將具備：
+
+- 於 Elsevier Developer Portal 申請個人 Scopus API key，並以 Colab Secrets 安全存放（不寫入程式碼）
+- 於 Colab 執行 Python 筆記本：執行單元、讀取輸出表格、下載檔案
+- 以 Scopus Search API 完成兩階段文獻檢索（寬泛 → 聚焦），並比較兩輪結果之差異
+- 以 Unpaywall API 查詢論文之開放取用（OA）狀態，下載開放取用之 PDF；非 OA 論文僅保留書目資訊（metadata）
+- 以 AI 聊天機器人回答同一文獻檢索問題，逐筆核對其引用與文獻資料庫實際紀錄是否一致，記錄核對結果
+- 說明學術資源之存取授權差異與合法下載界線，並以 Scopus 網頁完成人工核對
+
+## 課前準備（Pre-class Requirement）
+
+- 已登入 Google 帳號且可執行 Colab（第 1 課已完成環境部署；未完成者先依 Lab_Ch01 補做）
+- 學校郵箱（申請 Elsevier API key 用）
+- 一台可連網之電腦（課堂或自備）
+- 已初步選定一個與管理或資訊系統相關之檢索主題（示例：digital transformation in SMEs、AI in marketing、customer churn prediction；課堂上可調整）
+- 中國大陸同學：Colab 之替代環境見 `ai-tools-guide.md`「Colab 的中國替代」節（魔搭 ModelScope Notebook，可直接上傳本課 .ipynb 檔案運行）
+
+## 操作步驟
+
+以下步驟以各平台官方手冊為準（以 2026-09 為準；平台規則可能調整，如遇變動以官方最新說明為準）。
+
+### 步驟 1：申請 Scopus API key（建議課前完成）
+
+- 官方入口：https://dev.elsevier.com （Elsevier Developer Portal）
+- 操作：
+  1. 瀏覽器開啓上述網址；未註冊者先註冊帳戶——建議使用學校郵箱，機構欄填 Macao Polytechnic University；已有帳戶者直接登錄
+  2. 按頁面「I want an API Key」按鈕（或直接開啓 https://dev.elsevier.com/apikey/manage ）
+  3. 依表單指示填寫：產品（product）選 Scopus Search API；用途選學術研究／非商業
+  4. 提交後，頁面顯示一串字母數字組合之 API key（形如 `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`）——複製保存，步驟 3 使用
+- 預期結果：My API Key 頁面顯示你的個人 key（日後可返回此頁查閱）
+- 說明：任何人皆可申請 API key；Scopus 之完整存取依所屬機構對 Elsevier 產品之訂閱授權——以學校郵箱註冊可得較完整之欄位與配額
+- 失敗處理：表單欄位以頁面當日顯示為準；找不到按鈕時，先確認已登入
+
+### 步驟 2：開啓本課筆記本（GitHub → Colab）
+
+- 官方入口：https://colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch04/Lab_Ch04.ipynb （本課 notebook）
+- 操作：
+  1. 瀏覽器確認已登入 Google 帳號（未登入時 Colab 會要求先登入——必須登入才能開啓與執行）
+  2. 開啓上述連結——Colab 直接載入課程倉庫中之 notebook
+  3. 選單 File（檔案）→ Save a copy in Drive（在雲端硬碟中另存副本）——之後一律在你的個人副本上操作
+- 預期結果：Colab 開啓你的個人副本（標題含「Copy of」）
+- 說明：notebook 位於課程倉庫 `lab/ch04/Lab_Ch04.ipynb`；個人副本保存於你的 Google Drive，倉庫原版不會被更動
+- 失敗處理：Colab 顯示登入畫面 → 先完成 Google 帳號登入再重試；無法存取 Colab（網路受限）→ 改用替代環境（見課前準備最後一項）
+
+### 步驟 3：將金鑰存入 Colab Secrets
+
+- 官方指引：https://colab.research.google.com/notebooks/secrets.ipynb （Colab 官方 Secrets 說明）
+- 操作：
+  1. 於 Colab 視窗左側邊欄點擊鑰匙圖示（Secrets）開啓面板
+  2. 點 Add new secret，依下述新增兩個項目（每項填寫後開啓 Notebook access 切換鈕）：
+     - Name：`SCOPUS_API_KEY`；Value：步驟 1 取得之 key
+     - Name：`CONTACT_EMAIL`；Value：你的學校郵箱（Unpaywall 查詢要求真實郵箱）
+  3. 回到筆記本，執行第一個單元「環境設定」——執行方式：點擊單元左側 ▶ 播放按鈕（或選中單元後按 Shift+Enter）；執行期間單元左側顯示轉圈，完成後顯示綠色勾號
+- 預期結果：單元輸出「金鑰已載入」訊息（僅顯示成功訊息，不顯示金鑰內容）
+- 說明：Secrets 儲存於你的 Google 帳號、加密保存，不會寫入筆記本檔案，分享筆記本時亦不外洩；金鑰僅供個人使用——勿貼入程式碼、勿傳給他人
+- 失敗處理：單元回報找不到 `SCOPUS_API_KEY` → 檢查名稱拼寫（不可含空格）與 Notebook access 切換鈕是否已開啓；其他錯誤依單元輸出之提示處理
+
+### 步驟 4：第一輪檢索（寬泛）
+
+- 操作：
+  1. 向下捲動至「第一輪檢索」單元，找到 `<你的主題>`，整體取代為你的檢索主題文字
+  2. 執行該單元——筆記本以 Scopus Search API 檢索，輸出前 10 筆結果表格（標題、年份、DOI、被引次數）
+  3. 閱讀標題，憑標題選出與你主題最相關的 5 篇
+- 預期結果：表格顯示 10 列檢索結果
+- 說明：查詢語法 `TITLE-ABS-KEY(...)` 同時檢索標題、摘要與關鍵詞欄位；`PUBYEAR > 2022` 限 2023 年以來之文獻
+- 失敗處理：0 筆結果 → 主題詞過窄——減少關鍵詞或改用更廣泛之同義詞後重跑此單元；顯示 401／未授權 → 回步驟 1、3 檢查 key；顯示配額（quota）提示 → 稍候數分鐘再試
+
+### 步驟 5：第二輪檢索（聚焦）
+
+- 操作：
+  1. 從步驟 4 所選 5 篇之標題（需要時於 Scopus 網頁查看摘要）歸納 1–2 組更精確之關鍵詞組合
+  2. 在「聚焦檢索」單元改寫查詢後執行——示例：`TITLE-ABS-KEY(("generative AI" OR "large language model") AND (advertising OR "consumer engagement"))`
+  3. 比較兩輪結果之差異（結果數量、主題集中度）
+- 預期結果：第二輪結果數量減少、主題更聚焦於你關心的子議題
+- 記錄：以一句話寫出「窄化後聚焦於哪個子議題」
+- 說明：兩階段檢索為研究工作之標準起手式——寬泛檢索掌握全局，聚焦檢索逼近研究問題
+- 失敗處理：第二輪 0 筆 → 放寬至單一組關鍵詞再試
+
+### 步驟 6：開放取用（OA）查詢與 PDF 下載
+
+- 官方指引：https://unpaywall.org/products/api （Unpaywall API 文件；免註冊）
+- 操作：
+  1. 執行「開放取用查詢」單元——筆記本以各篇之 DOI 逐一查詢 Unpaywall，輸出 OA 狀態表
+  2. 執行「下載開放取用 PDF」單元——可開放取用之論文下載至檔案區：點 Colab 左側邊欄資料夾圖示（Files）查看，檔案位於 `downloads` 資料夾
+- 預期結果：每篇顯示 OA 狀態；OA 論文下載成功（檔名含 DOI）；非 OA 論文顯示「僅保留書目資訊」
+- 記錄：統計可下載篇數與非 OA 篇數
+- 說明：本練習僅下載開放取用版本（作者／出版社授權公開之版本）；訂閱制論文之全文取得須經機構訂閱或圖書館服務——自動下載僅限合法授權範圍，此即真實研究之常態
+- 失敗處理：查詢顯示 422 錯誤 → `CONTACT_EMAIL` 須為真實格式之郵箱（回步驟 3 修正）；個別論文下載失敗 → 跳過並記錄，不影響其餘篇數
+
+### 步驟 7：對照練習——AI 聊天機器人引用核對
+
+- 操作：
+  1. 於瀏覽器新分頁開啓你的 AI 聊天機器人（課程帳號：Gemini；亦可用其他對話式 AI——中國大陸同學可用本課常用之國產模型）
+  2. 以下列提示詞提問，要求 3 篇附完整引用資訊（標題／年份／DOI）之文獻：
+     - 提示詞範例：`請推薦 3 篇 2023 年以後與「<你的主題>」相關的學術論文，並提供每篇的標題、年份、DOI`
+  3. 在 notebook「AI 對照核對」單元填入聊天機器人回覆之標題、年份、DOI（依單元內註解之格式）
+  4. 執行該單元——notebook 以你先前檢索取得之文獻資料庫紀錄，逐筆核對聊天機器人提供之 DOI
+- 預期結果：核對表格逐筆顯示「已核實」（資料庫有此文）／「資料不符」（有此 DOI 但書目不同）／「查無此文」（可能存在虛構引用）；單元最後顯示真實核對率統計
+- 記錄：聊天機器人提供 3 篇中，已核實幾篇、資料不符幾篇、查無此文幾篇——以統計結果寫出一句結論（例如：「3 篇中 2 篇經核實，1 篇查無此文」）
+- 說明：大型語言模型（LLM, Large Language Model）可能產生看似真實、實際不存在的「虛構引用（hallucinated citation）」；AI 生成之引用資訊一律須經資料庫核實，不得直接採用——此即本單元「AI 產出、人工把關」之核心訓練
+- 失敗處理：3 篇皆查無此文 → 換一組提示詞或另一聊天機器人再試一次；部分 DOI 為空 → 以標題搜尋 Scopus 網頁核對
+
+### 步驟 8：人工核對與結果存檔
+
+- 操作：
+  1. 執行「匯出結果」單元——檢索結果存為 CSV 檔，於檔案區下載保存
+  2. 瀏覽器開啓 Scopus 網頁 https://www.scopus.com
+  3. 以其中 1 篇之標題搜尋，核對該篇之作者、年份與 DOI 是否與筆記本輸出一致
+- 預期結果：核對一致；CSV 已下載（檔名形如 `scopus_results_<你的主題>.csv`）
+- 說明：程式與 AI 代勞之後，人工核對為最後防線（課程一貫原則）；核對以校園網絡內進行為佳
+- 失敗處理：Scopus 網頁顯示存取受限 → 於校園網絡內重試；搜尋不到該篇 → 改用完整 DOI 搜尋核對
+
+## 完成標準（Deliverables）
+
+- [ ] Elsevier API key 申請成功
+- [ ] Colab 個人副本開啓，「環境設定」單元顯示金鑰已載入
+- [ ] 第一輪檢索完成（10 筆結果），並選出 5 篇
+- [ ] 第二輪聚焦檢索完成，並以一句話記錄窄化後之子議題
+- [ ] OA 狀態表完成（記錄：可下載篇數／非 OA 篇數）
+- [ ] 至少 1 篇 OA PDF 已下載至檔案區（若所選皆非 OA：放寬主題重跑一輪，直至取得至少 1 篇）
+- [ ] 1 篇經 Scopus 網頁人工核對（作者／年份／DOI 一致）
+- [ ] 對照記錄：聊天機器人 3 篇引用之核對結果（已核實／資料不符／查無此文篇數）＋一句結論
+- [ ] 檢索結果 CSV 已存檔
+
+## 工具對照
+
+工具無法使用時，查 AI 工具切換對照指南（已發佈 GitHub：aiccuser1/msba6125-2026 lab/ai-tools-guide.md；含 Colab 之替代環境「魔搭 ModelScope Notebook」與各工具說明）。
