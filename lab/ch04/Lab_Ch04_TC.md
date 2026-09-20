@@ -32,7 +32,7 @@ updated: 2026-09-20
 - 學校郵箱（申請 Elsevier API key 用）
 - 一台可連網之電腦（課堂或自備）
 - 已初步選定一個與管理或資訊系統相關之檢索主題（示例：digital transformation in SMEs、AI in marketing、customer churn prediction；課堂上可調整）
-- 中國大陸同學：Colab 之替代環境見 `ai-tools-guide.md`「Colab 的中國替代」節（魔搭 ModelScope Notebook，可直接上傳本課 .ipynb 檔案運行）
+- 無法使用 Colab 的同學：替代環境見 `ai-tools-guide.md`「Colab 的中國替代」節（魔搭 ModelScope Notebook，可直接上傳本課 .ipynb 檔案運行）
 
 ## 操作步驟
 
@@ -109,7 +109,7 @@ updated: 2026-09-20
 ### 步驟 7：對照練習——AI 聊天機器人引用核對
 
 - 操作：
-  1. 於瀏覽器新分頁開啓你的 AI 聊天機器人（課程帳號：Gemini；亦可用其他對話式 AI——中國大陸同學可用本課常用之國產模型）
+  1. 於瀏覽器新分頁開啓你的 AI 聊天機器人（課程帳號：Gemini；未使用 Google 帳號者可用本課常用之國產模型，如 DeepSeek、Kimi）
   2. 以下列提示詞提問，要求 3 篇附完整引用資訊（標題／年份／DOI）之文獻：
      - 提示詞範例：`請推薦 3 篇 2023 年以後與「<你的主題>」相關的學術論文，並提供每篇的標題、年份、DOI`
   3. 在 notebook「AI 對照核對」單元填入聊天機器人回覆之標題、年份、DOI（依單元內註解之格式）

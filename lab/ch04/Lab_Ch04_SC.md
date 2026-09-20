@@ -32,7 +32,7 @@ updated: 2026-09-20
 - 学校邮箱（申请 Elsevier API key 用）
 - 一台可连网之电脑（课堂或自备）
 - 已初步选定一个与管理或资讯系统相关之检索主题（示例：digital transformation in SMEs、AI in marketing、customer churn prediction；课堂上可调整）
-- 中国大陆同学：Colab 之替代环境见 `ai-tools-guide.md`「Colab 的中国替代」节（魔搭 ModelScope Notebook，可直接上传本课 .ipynb 档案运行）
+- 无法使用 Colab 的同学：替代环境见 `ai-tools-guide.md`「Colab 的中国替代」节（魔搭 ModelScope Notebook，可直接上传本课 .ipynb 档案运行）
 
 ## 操作步骤
 
@@ -109,7 +109,7 @@ updated: 2026-09-20
 ### 步骤 7：对照练习——AI 聊天机器人引用核对
 
 - 操作：
-  1. 于浏览器新分页开启你的 AI 聊天机器人（课程帐号：Gemini；亦可用其他对话式 AI——中国大陆同学可用本课常用之国产模型）
+  1. 于浏览器新分页开启你的 AI 聊天机器人（课程帐号：Gemini；未使用 Google 帐号者可用本课常用之国产模型，如 DeepSeek、Kimi）
   2. 以下列提示词提问，要求 3 篇附完整引用资讯（标题／年份／DOI）之文献：
      - 提示词范例：`请推荐 3 篇 2023 年以后与「<你的主题>」相关的学术论文，并提供每篇的标题、年份、DOI`
   3. 在 notebook「AI 对照核对」单元填入聊天机器人回复之标题、年份、DOI（依单元内注解之格式）
