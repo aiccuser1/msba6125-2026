@@ -6,7 +6,7 @@ tags:
   - lab
   - guide
 created: 2026-08-19
-updated: 2026-09-20
+updated: 2026-09-24
 ---
 
 # 第 4 课｜Colab 学术检索实作：Scopus 文献搜寻与开放取用 PDF 下载
@@ -54,6 +54,30 @@ updated: 2026-09-20
 - 说明：任何人皆可申请 API key；Scopus 之完整存取依所属机构对 Elsevier 产品之订阅授权——以学校邮箱注册可得较完整之栏位与配额
 - 失败处理：表单栏位以页面当日显示为准；找不到按钮时，先确认已登入
 
+### 步骤 2：开启本课笔记本（GitHub → Colab，或 Canvas 下载后上传）
+
+本步骤提供两种方式——择一即可：
+
+**方式 A：经课程 GitHub 仓库**
+- 官方入口：https://colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch04/Lab_Ch04.ipynb （本课 notebook）
+- 操作：
+  1. 浏览器确认已登入 Google 帐号（未登入时 Colab 会要求先登入——必须登入才能开启与执行）
+  2. 开启上述连结——Colab 直接载入课程仓库中之 notebook
+
+**方式 B：自 Canvas 下载后上传至 Colab**
+- 官方入口：https://colab.research.google.com （Colab 首页）
+- 操作：
+  1. 于 Canvas 课程页下载本课 notebook 档（`Lab_Ch04.ipynb`）
+  2. 浏览器开启 Colab 首页并登入 Google 帐号
+  3. 于首页「Upload」页签选择下载之 `Lab_Ch04.ipynb`（或于已开启笔记本之选单 File（档案）→ Upload notebook（上传笔记本）操作）
+  4. notebook 于新分页开启
+
+**两种方式接续之共同操作**：选单 File（档案）→ Save a copy in Drive（在云端硬碟中另存副本）——之后一律在你的个人副本上操作
+
+- 预期结果：Colab 开启你的个人副本（标题含「Copy of」）
+- 说明：notebook 原版位于课程仓库 `lab/ch04/Lab_Ch04.ipynb`（Canvas 亦提供同一档案之下载）；个人副本保存于你的 Google Drive，原版不会被更动
+- 失败处理：Colab 显示登入画面 → 先完成 Google 帐号登入再重试；无法存取 Colab（网路受限）→ 改用替代环境（见课前准备最后一项）；无法存取 GitHub（网路受限）→ 改用方式 B
+
 ### 步骤 3：以 Colab 内建 Gemini 除错（AI 辅助除错实作）
 
 本课 notebook 含一处程式错误——**这是刻意设计的除错练习**。你将使用 Colab 内建的 Gemini 助理找出错误并修正，体验「AI 辅助除错」之正确用法：AI 负责定位与建议，你负责验证与理解每一处修正。
@@ -68,17 +92,6 @@ updated: 2026-09-20
 - 记录：以一句话写出错误原因与修正方式（例如：「变数名称拼写不一致——修正为函式定义之名称」）
 - 说明：**VPN 提醒**——Gemini 于部分地区需经 VPN 方可使用；于 Colab 内使用 Gemini 助理同受此限，无法连线时先开启 VPN 再重试。Colab 之 Gemini 助理以官方公告为准（见下方官方指引）；AI 除错之产出同样须经你自行验证——对修正内容有疑问时追问 Gemini「为什么」，直至理解为止
 - 失败处理：Gemini 面板无法连线或无回应 → 开启 VPN 后重试；找不到 Gemini 图示 → 确认已登入 Google 帐号后重新载入页面；除错后仍失败 → 将新错误讯息再次贴入 Gemini 面板，追问直至解决
-
-### 步骤 4：开启本课笔记本（GitHub → Colab）
-
-- 官方入口：https://colab.research.google.com/github/aiccuser1/msba6125-2026/blob/main/lab/ch04/Lab_Ch04.ipynb （本课 notebook）
-- 操作：
-  1. 浏览器确认已登入 Google 帐号（未登入时 Colab 会要求先登入——必须登入才能开启与执行）
-  2. 开启上述连结——Colab 直接载入课程仓库中之 notebook
-  3. 选单 File（档案）→ Save a copy in Drive（在云端硬碟中另存副本）——之后一律在你的个人副本上操作
-- 预期结果：Colab 开启你的个人副本（标题含「Copy of」）
-- 说明：notebook 位于课程仓库 `lab/ch04/Lab_Ch04.ipynb`；个人副本保存于你的 Google Drive，仓库原版不会被更动
-- 失败处理：Colab 显示登入画面 → 先完成 Google 帐号登入再重试；无法存取 Colab（网路受限）→ 改用替代环境（见课前准备最后一项）
 
 ### 步骤 4：将金钥存入 Colab Secrets
 
