@@ -11,7 +11,7 @@ updated: 2026-10-02
 
 # 第 5 課｜Hermes Agent 安裝與完成日常簡單商務任務
 
-> 本實作由兩個單元組成。單元一在你的電腦安裝本地 AI 助手 Hermes Desktop，以 Nous Portal 免費方案連接模型，限制工作範圍至 sandbox 資料夾，並完成首次對話與邊界測試——**建議課前在家完成**（安裝需下載數百 MB，在家完成可讓課堂時間用於任務與討論）。單元二為課堂任務：先以 soul 設定統一回應風格，再完成三項日常商務任務，隨後實測記憶機制與技能沉澱，最後進行小組討論。
+> 本實作由兩個單元組成。單元一在你的電腦安裝本地 AI 助手 Hermes Desktop，以 Nous Portal 免費方案連接模型，並在 `Documents\hermes-sandbox` 完成首次對話與 sandbox 邊界測試——**建議課前在家完成**（安裝需下載數百 MB，在家完成可讓課堂時間用於任務與討論）。單元二為課堂任務：先以 soul 設定統一回應風格，再完成三項日常商務任務，隨後實測記憶機制與技能沉澱，最後進行小組討論。
 
 ## 學習目標（Learning Objectives）
 
@@ -19,7 +19,7 @@ updated: 2026-10-02
 
 - 在自己的電腦安裝 Hermes Desktop，並以免費方案（Nous Portal Free plan）連接免費模型
 - 說明 agentic AI 助手與單純聊天機器人的差異：工具、記憶與自主執行
-- 以工作範圍限制（sandbox）與權限請求為實例，說明本地 AI 助手的權限管理觀念
+- 以 sandbox 工作範圍（絕對路徑約定）與權限請求為實例，說明本地 AI 助手的權限管理觀念
 - 以 soul（人格設定檔）設定統一回應風格（結論先行、專業精簡、零客套、零 emoji），並驗證其跨對話持續
 - 與AI助手協作完成郵件、會議與行程三類商務任務
 - 說明並實測記憶機制（檢視、修改、遺忘偏好）與技能沉澱（skills）如何使助手持續改進
@@ -32,7 +32,7 @@ updated: 2026-10-02
 3. **建議先在家中完成單元一**：安裝需下載數百 MB 至 1 GB 級檔案，視網絡約 5–15 分鐘。若未及在家完成：課堂上即時安裝（約 10–20 分鐘）；時間不足時可先與同組已完成安裝者共用一台機器，並於課後在家補完
 4. 若使用 VPN 或代理且下載、連線緩慢：先關閉後重試（見下方「常見問題」）
 
-## 單元一：安裝 Hermes Desktop、連接免費模型與工作區限制（建議課前在家完成）
+## 單元一：安裝 Hermes Desktop、連接免費模型與 Sandbox 工作範圍（建議課前在家完成）
 
 ### 1.1 概念：什麼是 Agentic AI
 
@@ -90,47 +90,47 @@ New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Docu
    **預期**：助手正常回覆，且回覆中提到當前模型名稱。視窗右下角狀態列亦顯示模型名稱，可與回覆對照。
 2. 認識界面：窗口左側邊欄可見 agents／skills／memory 等分區——這些是助手的工具與記憶存放區；本單元不需要改動，先觀察即可。
 
-### 1.6 限制工作範圍至 Sandbox（工作區設定與邊界測試）
+### 1.6 限制工作範圍至 Sandbox（資料夾約定與邊界測試）
 
-本地助手能讀寫本機檔案——正式使用前，應將其工作範圍限制在指定資料夾（sandbox），以最小權限原則運作：範圍內直接作業；範圍以外的檔案存取一律出現權限請求，由你決定是否放行。本課統一使用 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\workspace` 作為工作資料夾（與 1.3 節的 Hermes 資料位置同層）。
+本地助手沒有「一個設定鎖定全部存檔位置」的開關：**存檔落點取決於你給的路徑**——未指明位置（相對路徑）時，檔案落在助手當下的工作目錄，可能出現在意想不到的地方。因此本課採用兩層做法：① 所有任務檔案一律放在統一資料夾 `C:\Users\<你的用戶名>\Documents\hermes-sandbox`（即 1.3 節建立的資料夾——內含 `hermes` 程式資料夾，請勿改動），指示助手時**一律給完整絕對路徑**；② 範圍以外的重要位置（桌面等），以權限請求把關——批准或拒絕由你決定（最小權限原則）。
 
-1. 建立工作資料夾——開啓 **Windows PowerShell**，執行：
+注意：桌面設定中的 **Workspace** 項與此無關——它只控制側邊欄 Projects 的 Git 儲存庫掃描範圍，不影響存檔位置；本節做法不依賴任何設定開關。
 
-```powershell
-New-Item -ItemType Directory -Force "$HOME\Documents\hermes-sandbox\workspace"
-```
+1. **範圍內測試**（預期成功）——`Documents\hermes-sandbox` 資料夾已於 1.3 節建立（內含 `hermes` 程式資料夾，本課任務只新增檔案、不改動既有內容）。在輸入框輸入以下文字（先將 `<你的用戶名>` 換成你的實際用戶名）：
 
-2. 設定工作區——於 Hermes Desktop 開啓 **設定**（Settings）→ 找到 **Workspace**（工作區／工作資料夾）項 → 指向上述路徑 → 儲存。各版本設定用語不一：以「workspace／工作區／工作資料夾」相關項目爲準。
-3. **範圍內測試**（預期成功）——在輸入框輸入：`請在我的工作區（workspace）資料夾建立 test.txt，內容寫「sandbox ok」。`
+`請在 C:\Users\<你的用戶名>\Documents\hermes-sandbox 資料夾建立 test.txt，內容寫「sandbox ok」。`
 
-   **預期**：出現權限請求，範圍＝workspace 資料夾——檢視範圍後批准。完成後於檔案總管確認 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\workspace\test.txt` 存在且內容正確。
-4. **範圍外測試**（預期被擋）——輸入：`請在桌面（Desktop）建立 outside.txt，內容寫「out of scope」。`
+   **預期**：助手存取該位置時出現權限請求（範圍＝該資料夾）——檢視範圍後批准。完成後於檔案總管確認 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\test.txt` 存在且內容正確。
+2. **範圍外測試**（預期被擋）——輸入：
 
-   **預期**：出現權限請求且範圍顯示桌面路徑（`C:\Users\<你的用戶名>\Desktop`）——**拒絕**（本測試目的即驗證邊界）。完成後確認桌面上沒有 outside.txt。
+`請在桌面（C:\Users\<你的用戶名>\Desktop）建立 outside.txt，內容寫「out of scope」。`
 
-**記錄**：兩次權限請求顯示的範圍，以及你對範圍外請求的處理決定。
+   **預期**：出現權限請求且範圍顯示桌面路徑——**拒絕**（本測試目的即驗證邊界）。完成後確認桌面上沒有 outside.txt。
+3. **（選配）相對路徑落點觀察**——輸入 `請建立一個 rel-test.txt，內容寫「relative」，不用指定資料夾。`；再問助手 `rel-test.txt 實際建立在哪個資料夾？`（或自行以檔案總管搜尋核對落點）——觀察未指明位置時，落點如何取決於助手當下的工作目錄；這說明為何本課一律用絕對路徑。
 
-若兩項測試均未出現權限請求：記錄實際行為（直接執行或直接拒絕）——權限模型因版本而異，重點是親自驗證並記錄；情況於小組討論報告。
+**記錄**：兩次請求顯示的範圍與你的處理決定；有做選配步驟者，記下落點與你的觀察。
+
+若兩項測試均未出現權限請求：記錄實際行為（直接執行或直接拒絕）——權限模型因版本與設定而異，重點是親自驗證並記錄；情況於小組討論報告。
 
 ### 1.7 單元一檢查清單
 
 - [ ] 安裝完成並通過首次對話（回覆與狀態列可見模型名稱）
 - [ ] Hermes 資料位於 `Documents\hermes-sandbox\hermes`（可於檔案總管確認）
-- [ ] Sandbox 設定與邊界測試完成——範圍內檔案建立成功、範圍外請求已檢視並拒絕（記錄兩次請求範圍）
+- [ ] Sandbox 邊界測試完成——範圍內檔案建立成功、範圍外請求已檢視並拒絕（記錄兩次請求範圍）
 
 ### 1.8 安全與用量注意
 
 - 免費方案不等於無限：有限速機制，回應慢或暫時拒絕屬正常——稍候重試，或按視窗右下角模型名稱更換其他 `:free` 模型
 - 你的對話會送往雲端模型：只使用虛構與公開資料；不要輸入個人密碼、證件號碼或任何敏感資料
 - API key 與登錄狀態存放於本機（`Documents\hermes-sandbox\hermes`）：共用電腦使用後登出為宜；不要把 `config.yaml` 或 `.env` 傳給他人
-- 工作範圍限制（1.6）是第一層防護、非絕對隔離：重要檔案另行備份；範圍外請求除確有需要，一律拒絕
+- Sandbox 作業約定與權限把關（1.6）是第一層防護、非絕對隔離：重要檔案另行備份；範圍外請求除確有需要，一律拒絕
 - 本階段**不連接** WhatsApp／Telegram 等個人訊息平台——個人訊息帳號的 gateway 串接屬後續主題，避免課堂示範誤傳真實訊息
 
 ## 單元二：課堂任務——回應風格、商務任務與記憶機制
 
 ### 2.1 開場確認
 
-1. 開啓 Hermes Desktop；未完成單元一者：先依 1.2–1.6 節完成安裝、連接與工作區設定（課堂安裝約 10–20 分鐘）。
+1. 開啓 Hermes Desktop；未完成單元一者：先依 1.2–1.6 節完成安裝、連接與邊界測試（課堂安裝約 10–20 分鐘）。
 2. 確認視窗右下角狀態列顯示你所選的 `:free` 模型名稱；不確定時輸入 `你好，請說明你目前使用的模型。` 核對。
 
 ### 2.2 設定回應風格（soul 人格設定檔）
@@ -234,7 +234,7 @@ New-Item -ItemType Directory -Force "$HOME\Documents\hermes-sandbox\workspace"
 | 首次啓動模型清單空白 | 回 Nous Portal 方案頁確認已顯示 "CONNECTED"（按 CONNECT）；未解決則重開 Hermes |
 | `:free` 模型回應慢或 429 | 免費層限速屬正常——稍候片刻重試，或更換其他 `:free` 模型；課堂上各自使用不同模型可分散負載 |
 | 選定模型後出現「並非為工具使用設計」類警示 | 該模型未針對工具調用（tool calling）設計——改選其他 `:free` 模型（優先 Nous／Hermes 系列） |
-| 設定中找不到 Workspace（工作區）項 | 版本差異——於設定中搜尋 workspace／工作區／工作資料夾；仍無此項者略過 1.6 步驟 2，以權限請求把關（範圍外一律拒絕），並記錄實際情況 |
+| Settings 的 Workspace 是否決定助手存檔位置？ | 否——該項僅控制側邊欄 Projects 的 Git 儲存庫掃描範圍，不影響存檔。落點跟隨你指示的路徑（未指明位置時跟隨助手當下工作目錄，落點不固定）；本課做法：任務檔案一律存放於 `Documents\hermes-sandbox`，存取時給完整絕對路徑 |
 | soul 儲存後回覆風格未變 | 確認寫入的是當前使用中的 profile；以 `/new` 開新對話再驗證；仍不變則在對話中直接貼上規格要求遵守 |
 | 助手不記得跨對話資訊／「列出記憶」無回應／無新 skill | 免費模型工具調用偶有失敗——重試一次；確認曾以「請記住」明確交代；無新 skill 則直接要求建立；仍失敗則記錄後於討論報告 |
 | 1.3 節搬移報錯（檔案被佔用或拒絕存取） | Hermes 正在執行——關閉所有 Hermes 視窗，並於系統匣（工作列右下角）的 Hermes 圖示按右鍵選「結束」；再重跑該三行指令 |
@@ -250,5 +250,5 @@ New-Item -ItemType Directory -Force "$HOME\Documents\hermes-sandbox\workspace"
 | Hermes Desktop 下載與官方文件 | https://hermes-agent.nousresearch.com/desktop ； https://hermes-agent.nousresearch.com/docs |
 | Nous Portal（免費方案） | https://portal.nousresearch.com |
 | Hermes 本機資料 | `C:\Users\<你的用戶名>\Documents\hermes-sandbox\hermes`（設定檔 `config.yaml`；soul 與記憶檔為可讀 markdown，可直接檢視；安裝器原位置 `%LOCALAPPDATA%\hermes` 以連結指向同一資料，仍有效） |
-| 課程工作區（sandbox） | `C:\Users\<你的用戶名>\Documents\hermes-sandbox\workspace`（助手工作範圍；範圍外存取須權限請求放行） |
+| 課程工作資料夾（sandbox） | `C:\Users\<你的用戶名>\Documents\hermes-sandbox`（任務檔案一律以絕對路徑存於此；範圍外存取須權限請求放行） |
 | 工具無法使用時 | 查 AI 工具切換對照指南（已發佈於課程 GitHub 倉庫 lab/ai-tools-guide.md；Gemini↔Copilot↔WPS AI／DeepSeek 思考模式／harness 說明） |
