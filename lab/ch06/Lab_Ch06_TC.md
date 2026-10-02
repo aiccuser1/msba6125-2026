@@ -27,7 +27,7 @@ updated: 2026-09-21
 
 ## 課前準備（Pre-class Requirement）
 
-1. 完成第 5 課實作：Hermes Desktop 已安裝，並以 Nous Portal 免費方案連接模型；本實作沿用安裝位置 `C:\Users\<你的用戶名>\Documents\hermes-sandbox`
+1. 完成第 5 課實作：Hermes Desktop 已安裝（預設安裝位置 `C:\Users\<你的用戶名>\AppData\Local\hermes`），並以 Nous Portal 免費方案連接模型；本實作之任務檔案沿用工作資料夾 `C:\Users\<你的用戶名>\Documents\hermes-sandbox`
 2. 確認 Hermes 使用之模型名稱以 `:free` 結尾；若出現「並非為工具使用設計」之提示，於模型設定改選其他 `:free` 模型
 3. 從課程頁（Canvas 檔案區）下載資料檔 `sales_2026.xlsx`（放置位置見 1.1 節）
 4. 資料為課程生成之虛構零售資料，不含任何真實客戶或公司資訊
@@ -37,7 +37,7 @@ updated: 2026-09-21
 ### 1.1 建立工作資料夾
 
 1. 開啓檔案總管（工作列上的資料夾圖示，或按鍵盤 Windows 鍵＋E）
-2. 於上方位址列貼上 `C:\Users\<你的用戶名>\Documents\hermes-sandbox` 後按 Enter——此為第 5 課建立的 Hermes 資料位置
+2. 於上方位址列貼上 `C:\Users\<你的用戶名>\Documents\hermes-sandbox` 後按 Enter——此為第 5 課建立的任務工作資料夾
 3. 於資料夾空白處按右鍵 → 新增 → 資料夾；輸入名稱 `lab-ch06` 後按 Enter 確認
 4. 將已下載的 `sales_2026.xlsx` 移入 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\lab-ch06\`
 
@@ -130,7 +130,7 @@ updated: 2026-09-21
 2. 貼上以下第一行並按 Enter；等候安裝完成，再貼第二行並按 Enter：
 
 ```powershell
-& "$HOME\Documents\hermes-sandbox\hermes\bin\uv.exe" tool install streamlit --with openpyxl
+& "$env:LOCALAPPDATA\hermes\bin\uv.exe" tool install streamlit --with openpyxl
 & "$HOME\.local\bin\streamlit.exe" run "$HOME\Documents\hermes-sandbox\lab-ch06\dashboard.py"
 ```
 
@@ -231,7 +231,7 @@ MCP（Model Context Protocol）為助手調用外部工具的標準協議。exce
 
 ### 4.2 配置
 
-1. 於檔案總管位址列貼上 `%USERPROFILE%\Documents\hermes-sandbox\hermes` 後按 Enter；右鍵 `config.yaml` → 開啓方式 → 記事本
+1. 於檔案總管位址列貼上 `%LOCALAPPDATA%\hermes` 後按 Enter；右鍵 `config.yaml` → 開啓方式 → 記事本
 2. 按 Ctrl+F 搜索 `mcp_servers`：
    - 已存在：將以下內容新增於該區段之下，縮進層級與既有項目相同
    - 不存在：移至檔案最末尾，另起一行貼入整段（`mcp_servers:` 由第一列開始，不可有空格）
@@ -240,7 +240,7 @@ MCP（Model Context Protocol）為助手調用外部工具的標準協議。exce
 ```yaml
 mcp_servers:
   excel-mcp:
-    command: "C:/Users/<你的用戶名>/Documents/hermes-sandbox/hermes/bin/uv.exe"
+    command: "C:/Users/<你的用戶名>/AppData/Local/hermes/bin/uv.exe"
     args: ["tool", "run", "excel-mcp-server", "stdio"]
 ```
 
@@ -304,5 +304,5 @@ mcp_servers:
 | Streamlit 官方文件（安裝與元件） | https://docs.streamlit.io |
 | excel-mcp-server 專案 | https://github.com/haris-musa/excel-mcp-server |
 | SQLite／Python sqlite3 文件 | https://sqlite.org ； https://docs.python.org/3/library/sqlite3.html |
-| Hermes 本機設定（config.yaml） | `C:\Users\<你的用戶名>\Documents\hermes-sandbox\hermes\config.yaml` |
+| Hermes 本機設定（config.yaml） | `C:\Users\<你的用戶名>\AppData\Local\hermes\config.yaml` |
 | 工具無法使用時 | 查 AI 工具切換對照指南（已發佈 GitHub：aiccuser1/msba6125-2026 lab/ai-tools-guide.md；Gemini↔Copilot↔WPS AI／DeepSeek 思考模式／harness 說明） |
