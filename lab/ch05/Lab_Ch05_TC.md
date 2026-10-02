@@ -11,7 +11,7 @@ updated: 2026-10-02
 
 # 第 5 課｜Hermes Agent 安裝與完成日常簡單商務任務
 
-> 本實作由兩個單元組成。單元一在你的電腦安裝本地 AI 助手 Hermes Desktop，以 Nous Portal 免費方案連接模型，並在 `Documents\hermes-sandbox` 完成首次對話與 sandbox 邊界測試——**建議課前在家完成**（安裝需下載數百 MB，在家完成可讓課堂時間用於任務與討論）。單元二為課堂任務：先以指示設定統一回應風格（soul），再完成三項日常商務任務，隨後實測記憶機制與技能沉澱，最後進行小組討論。
+> 本實作由兩個單元組成。單元一在你的電腦安裝本地 AI 助手 Hermes Desktop（採預設安裝位置），以 Nous Portal 免費方案連接模型，並建立 `Documents\hermes-sandbox` 任務工作範圍、完成首次對話與 sandbox 邊界測試——**建議課前在家完成**（安裝需下載數百 MB，在家完成可讓課堂時間用於任務與討論）。單元二為課堂任務：先以指示設定統一回應風格（soul），再完成三項日常商務任務，隨後實測記憶機制與技能沉澱，最後進行小組討論。
 
 ## 學習目標（Learning Objectives）
 
@@ -49,31 +49,12 @@ AI 助手（agent）與單純聊天機器人的主要差異有三：**工具**�
    - 主畫面按 **INSTALL** 開始安裝
    - 畫面顯示安裝進度（自動安裝 Python、Node.js、Git 與 Hermes 核心，並建立虛擬環境）——期間不要關閉窗口或讓電腦休眠
    - 安裝失敗時記下錯誤文字，見下方「常見問題」之「安裝失敗」條目處理
-4. **安裝完成後先不要按 LAUNCH**：先依 1.3 節把 Hermes 資料夾移至課程統一位置（首次啓動前搬移，可避免檔案佔用問題），再回來啓動。
+4. 安裝完成後，按 **LAUNCH** 啓動 Hermes Desktop——前往 1.3 節連接免費模型（安裝畫面已關閉者：由開始功能表或桌面捷徑開啓）。
 5. （可選）安裝後檢查：開始功能表搜尋 **PowerShell** → 開啓 Windows PowerShell → 執行 `hermes --version`。**預期輸出**：一行版本號（如 `hermes 0.21.0`）。若顯示「無法將 hermes 識別爲 cmdlet」：關閉全部 PowerShell 後開新窗口重試；仍失敗表示安裝器未將 hermes 加入 PATH——Desktop 使用不受影響，可略過此檢查。
 
-### 1.3 搬移至課程統一位置
+### 1.3 連接免費模型（Nous Portal）
 
-後續操作一律以 `Documents\hermes-sandbox\hermes` 為 Hermes 資料位置。搬移以「移動＋連結」方式進行：資料實際存放於新位置，安裝器原位置保留為連結——程式運作、PATH 設定、登入狀態均不受影響。
-
-1. 確認 Hermes 未在執行（尚未按 LAUNCH 者無此問題）。
-2. 開啓 **Windows PowerShell**（開始功能表搜尋 PowerShell，不需要管理員模式），依序貼上執行以下三行（每行按 Enter 完成後再貼下一行）：
-
-```powershell
-New-Item -ItemType Directory -Force "$HOME\Documents\hermes-sandbox"
-Move-Item "$env:LOCALAPPDATA\hermes" "$HOME\Documents\hermes-sandbox\hermes"
-New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Documents\hermes-sandbox\hermes"
-```
-
-**預期**：三行均無錯誤訊息。搬移後 Hermes 資料實際存放於 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\hermes`（「資料與工具速查」以此位置為準）；安裝器原位置 `%LOCALAPPDATA%\hermes` 仍指向同一份資料。若第一行出現「已存在」提示或第三行報「已存在」錯誤：表示先前已搬移過，可直接接續下一步。
-
-3. 回到安裝器視窗按 **LAUNCH** 啓動（安裝視窗已關閉者：由開始功能表或桌面捷徑開啓 Hermes）。
-
-遇到搬移錯誤（檔案被佔用或拒絕存取）：關閉所有 Hermes 視窗，並於系統匣（工作列右下角）的 Hermes 圖示按右鍵選「結束」，再重跑該三行指令。
-
-### 1.4 連接免費模型（Nous Portal）
-
-1. 按 **LAUNCH**（或桌面捷徑）啓動 Hermes Desktop。
+1. 確認 Hermes Desktop 已開啓（尚未開啓者：由開始功能表或桌面捷徑開啓）。
 2. **預期畫面**：出現設定畫面 "Let's get you set up"——選擇 **Nous Portal**（標示 Recommended）。
 3. 瀏覽器自動開啓 Nous Portal 登入頁（官方入口 https://portal.nousresearch.com ）：
    - 沒有帳號者按 **Sign up**；已有帳號者直接登錄。登錄方式以當日頁面提供者爲準，**Google 或 GitHub 皆可**
@@ -82,53 +63,54 @@ New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Docu
    - 頁面顯示 "CONNECTED"（或授權成功信息）後可關閉瀏覽器
 4. 回到 Hermes Desktop（會自動接續）：「Default model」卡片按 **Change** → 搜尋框輸入 **free** → 選擇名稱以 `:free`／`:Free` 結尾的模型——免費模型名單會輪換，以當日顯示為準；**課堂上請各自選擇不同的 `:free` 模型**（分散負載，避免全班集中使用同一模型）。
 5. 若選定後 Hermes 對該模型顯示「並非為工具使用設計」類警示：改選其他 `:free` 模型。
-6. 按 **Start chatting** 進入對話——前往 1.5 節。
+6. 按 **Start chatting** 進入對話——前往 1.4 節。
 
-### 1.5 首次對話與介面認識
+### 1.4 首次對話與介面認識
 
 1. 在輸入框輸入以下文字並送出：`你好，請介紹你自己，並說明你目前使用的模型與 provider。`
    **預期**：助手正常回覆，且回覆中提到當前模型名稱。視窗右下角狀態列亦顯示模型名稱，可與回覆對照。
 2. 認識界面：窗口左側邊欄可見 agents／skills／memory 等分區——這些是助手的工具與記憶存放區；本單元不需要改動，先觀察即可。
 
-### 1.6 限制工作範圍至 Sandbox（資料夾約定與邊界測試）
+### 1.5 限制工作範圍至 Sandbox（資料夾約定與邊界測試）
 
-本地助手沒有單一設定可鎖定全部存檔位置：**存檔位置取決於你提供的路徑**——未指明位置（相對路徑）時，檔案存放於助手當下的工作目錄，可能出現在非預期的位置。因此本課採用兩層做法：① 所有任務檔案一律存放於統一資料夾 `C:\Users\<你的用戶名>\Documents\hermes-sandbox`（即 1.3 節建立的資料夾——內含 `hermes` 程式資料夾，請勿改動），指示助手時**一律提供完整絕對路徑**；② 範圍以外的重要位置（桌面等），以權限請求把關——批准或拒絕由你決定（最小權限原則）。
+本地助手沒有單一設定可鎖定全部存檔位置：**存檔位置取決於你提供的路徑**——未指明位置（相對路徑）時，檔案存放於助手當下的工作目錄，可能出現在非預期的位置。因此本課採用兩層做法：① 所有任務檔案一律存放於統一資料夾 `C:\Users\<你的用戶名>\Documents\hermes-sandbox`，指示助手時**一律提供完整絕對路徑**；② 範圍以外的重要位置（桌面等），以權限請求把關——批准或拒絕由你決定（最小權限原則）。
 
-1. **範圍內測試**（預期成功）——`Documents\hermes-sandbox` 資料夾已於 1.3 節建立（內含 `hermes` 程式資料夾，本課任務只新增檔案、不改動既有內容）。在輸入框輸入以下文字（先將 `<你的用戶名>` 換成你的實際用戶名）：
+1. **建立工作資料夾**：於檔案總管在 `C:\Users\<你的用戶名>\Documents` 內建立 `hermes-sandbox` 資料夾（若已存在則略過；此後本課所有任務檔案皆存放於此）。
+2. **範圍內測試**（預期成功）——在輸入框輸入以下文字（先將 `<你的用戶名>` 換成你的實際用戶名）：
 
 `請在 C:\Users\<你的用戶名>\Documents\hermes-sandbox 資料夾建立 test.txt，內容寫「sandbox ok」。`
 
    **預期**：助手存取該位置時出現權限請求（範圍＝該資料夾）——檢視範圍後批准。完成後於檔案總管確認 `C:\Users\<你的用戶名>\Documents\hermes-sandbox\test.txt` 存在且內容正確。
-2. **範圍外測試**（預期被擋）——輸入：
+3. **範圍外測試**（預期被擋）——輸入：
 
 `請在桌面（C:\Users\<你的用戶名>\Desktop）建立 outside.txt，內容寫「out of scope」。`
 
    **預期**：出現權限請求且範圍顯示桌面路徑——**拒絕**（本測試目的即驗證邊界）。完成後確認桌面上沒有 outside.txt。
-3. **（可選）相對路徑落點觀察**——輸入 `請建立一個 rel-test.txt，內容寫「relative」，不用指定資料夾。`；再問助手 `rel-test.txt 實際建立在哪個資料夾？`（或自行以檔案總管搜尋核對落點）——觀察未指明位置時，落點如何取決於助手當下的工作目錄；這說明為何本課一律用絕對路徑。
+4. **（可選）相對路徑落點觀察**——輸入 `請建立一個 rel-test.txt，內容寫「relative」，不用指定資料夾。`；再問助手 `rel-test.txt 實際建立在哪個資料夾？`（或自行以檔案總管搜尋核對落點）——觀察未指明位置時，落點如何取決於助手當下的工作目錄；這說明為何本課一律用絕對路徑。
 
 **記錄**：兩次請求顯示的範圍與你的處理決定；有進行可選步驟者，記下落點與你的觀察。
 
 若兩項測試均未出現權限請求：記錄實際行為（直接執行或直接拒絕）——權限模型因版本與設定而異，重點是親自驗證並記錄；情況於小組討論報告。
 
-### 1.7 單元一檢查清單
+### 1.6 單元一檢查清單
 
 - [ ] 安裝完成並通過首次對話（回覆與狀態列可見模型名稱）
-- [ ] Hermes 資料位於 `Documents\hermes-sandbox\hermes`（可於檔案總管確認）
+- [ ] Hermes 採預設安裝完成（毋須移動）；`Documents\hermes-sandbox` 工作資料夾已建立（任務檔案的家）
 - [ ] Sandbox 邊界測試完成——範圍內檔案建立成功、範圍外請求已檢視並拒絕（記錄兩次請求範圍）
 
-### 1.8 安全與用量注意
+### 1.7 安全與用量注意
 
 - 免費方案不等於無限：有限速機制，回應慢或暫時拒絕屬正常——稍候重試，或按視窗右下角模型名稱更換其他 `:free` 模型
 - 你的對話會送往雲端模型：只使用虛構與公開資料；不要輸入個人密碼、證件號碼或任何敏感資料
-- API key 與登錄狀態存放於本機（`Documents\hermes-sandbox\hermes`）：共用電腦使用後登出為宜；不要把 `config.yaml` 或 `.env` 傳給他人
-- Sandbox 作業約定與權限把關（1.6）是第一層防護、非絕對隔離：重要檔案另行備份；範圍外請求除確有需要，一律拒絕
+- API key 與登錄狀態存放於本機（`C:\Users\<你的用戶名>\AppData\Local\hermes`）：共用電腦使用後登出為宜；不要把 `config.yaml` 或 `.env` 傳給他人
+- Sandbox 作業約定與權限把關（1.5）是第一層防護、非絕對隔離：重要檔案另行備份；範圍外請求除確有需要，一律拒絕
 - 本階段**不連接** WhatsApp／Telegram 等個人訊息平台——個人訊息帳號的 gateway 串接屬後續主題，避免課堂示範誤傳真實訊息
 
 ## 單元二：課堂任務——回應風格、商務任務與記憶機制
 
 ### 2.1 開場確認
 
-1. 開啓 Hermes Desktop；未完成單元一者：先依 1.2–1.6 節完成安裝、連接與邊界測試（課堂安裝約 10–20 分鐘）。
+1. 開啓 Hermes Desktop；未完成單元一者：先依 1.2–1.5 節完成安裝、連接與邊界測試（課堂安裝約 10–20 分鐘）。
 2. 確認視窗右下角狀態列顯示你所選的 `:free` 模型名稱；不確定時輸入 `你好，請說明你目前使用的模型。` 核對。
 
 ### 2.2 設定回應風格（soul 人格設定檔）
@@ -152,7 +134,7 @@ New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Docu
 
    **預期**：助手寫入 soul 檔並回報路徑；寫入時可能出現權限請求——檢視範圍（Hermes 資料夾內之檔案）後批准。
 2. 驗證——輸入 `你好，請用兩三句話說明你能幫我做什麼。`——檢查輸出是否符合規格：結論先行、零客套、零 emoji、精簡。若未見變化，輸入 `/new` 開新對話（soul 於新對話載入）後重測；仍不符時，於對話中追加：`請嚴格遵守 soul 內的寫作規格：結論先行、零客套、零 emoji、專業精簡。`
-3. （可選）核對檔案——問助手 `請顯示你 soul 檔的完整內容。`，或自行開啓 `Documents\hermes-sandbox\hermes` 內之 soul 檔，檢視規格已寫入。
+3. （可選）核對檔案——問助手 `請顯示你 soul 檔的完整內容。`，或自行開啓 `C:\Users\<你的用戶名>\AppData\Local\hermes` 內之 soul 檔，檢視規格已寫入。
 
   **記錄**：助手回報的檔案路徑；驗證輸出第一句是否即為答案（結論先行）。
 
@@ -237,8 +219,7 @@ New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Docu
 | Settings 的 Workspace 是否決定助手存檔位置？ | 否——該項僅控制側邊欄 Projects 的 Git 儲存庫掃描範圍，不影響存檔。落點跟隨你指示的路徑（未指明位置時跟隨助手當下工作目錄，落點不固定）；本課做法：任務檔案一律存放於 `Documents\hermes-sandbox`，存取時給完整絕對路徑 |
 | 以指示寫入 soul 失敗（助手未寫入／風格未變） | 追問 `請顯示你 soul 檔的完整內容。` 核對是否已寫入；重試指示一次；以 `/new` 開新對話後再驗證。仍失敗＝備援以界面手動設定（Hermes Desktop 左下角 → Manage profiles → 當前 profile → soul；選單用語各版本略有差異），或於對話中直接貼上規格要求遵守，並回報教師 |
 | 助手不記得跨對話資訊／「列出記憶」無回應／無新 skill | 免費模型工具調用偶有失敗——重試一次；確認曾以「請記住」明確交代；無新 skill 則直接要求建立；仍失敗則記錄後於討論報告 |
-| 1.3 節搬移報錯（檔案被佔用或拒絕存取） | Hermes 正在執行——關閉所有 Hermes 視窗，並於系統匣（工作列右下角）的 Hermes 圖示按右鍵選「結束」；再重跑該三行指令 |
-| 搬移後捷徑或 `hermes` 指令失效 | 表示原位置連結未建立成功——重跑 1.3 節第三行指令（`New-Item -ItemType Junction ...`）後重試 |
+| 找不到 Hermes 安裝位置或設定檔 | 採預設安裝——位於 `C:\Users\<你的用戶名>\AppData\Local\hermes`（檔案總管位址列輸入 `%LOCALAPPDATA%\hermes` 可開啓；內含 `config.yaml`、soul 與記憶檔） |
 | 以指令啓動 Desktop 時首次建構失敗（畫面大量 npm error） | 屬備援路線（以 PowerShell 安裝者）之情況，路線 A 不會遇到——① 錯誤含 `assert-root-install`：於程式庫根目錄執行 `npm ci` 後重跑（2026-09-05 教師機實測修法）② 錯誤含 `Access is denied` on `Hermes.exe`：關閉已開啓的 Hermes 視窗後重跑 |
 | npm 指令報 log 寫入失敗（指向已不存在的磁碟） | 機器 npm cache 設定指向失效路徑——執行 `npm config set cache "C:\Users\<你的用戶名>\AppData\Local\npm-cache"` 後重跑（罕見，多見於曾改動磁碟配置的舊機器） |
 | 終端機持續出現 simple-git "Invalid value for custom binary"／DEP0180 警告 | 全屬無害噪音（上游已知問題 [GitHub issue #79245](https://github.com/NousResearch/hermes-agent/issues/79245)：Windows 路徑觸發；功能不受影響），忽略即可 |
@@ -249,6 +230,6 @@ New-Item -ItemType Junction -Path "$env:LOCALAPPDATA\hermes" -Target "$HOME\Docu
 |---|---|
 | Hermes Desktop 下載與官方文件 | https://hermes-agent.nousresearch.com/desktop ； https://hermes-agent.nousresearch.com/docs |
 | Nous Portal（免費方案） | https://portal.nousresearch.com |
-| Hermes 本機資料 | `C:\Users\<你的用戶名>\Documents\hermes-sandbox\hermes`（設定檔 `config.yaml`；soul 與記憶檔為可讀 markdown，可直接檢視；安裝器原位置 `%LOCALAPPDATA%\hermes` 以連結指向同一資料，仍有效） |
+| Hermes 本機資料 | `C:\Users\<你的用戶名>\AppData\Local\hermes`（採預設安裝位置，毋須移動；設定檔 `config.yaml`；soul 與記憶檔為可讀 markdown，可直接檢視） |
 | 課程工作資料夾（sandbox） | `C:\Users\<你的用戶名>\Documents\hermes-sandbox`（任務檔案一律以絕對路徑存於此；範圍外存取須權限請求放行） |
 | 工具無法使用時 | 查 AI 工具切換對照指南（已發佈於課程 GitHub 倉庫 lab/ai-tools-guide.md；Gemini↔Copilot↔WPS AI／DeepSeek 思考模式／harness 說明） |
